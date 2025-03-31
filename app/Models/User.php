@@ -67,4 +67,8 @@ class User extends Authenticatable
             relatedPivotKey: 'followee_id',
         );
     }
+
+    public function logs() {
+        return $this->hasMany(Log::class);
+    }
 }

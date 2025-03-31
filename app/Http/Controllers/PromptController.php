@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Log;
 use App\Models\Prompt;
 use App\Models\Snippet;
 use App\Models\Task;
@@ -43,6 +44,12 @@ class PromptController extends Controller
             "description" => request('description'),
             "question" => request('question'),
             "result" => request('result'),
+            "user_id" => Auth::user()->id,
+        ]);
+
+        Log::create([
+            "type" => "info",
+            "message" => "User " . Auth::user()->name . " created, prompt with name " . request('name') . ".",
             "user_id" => Auth::user()->id,
         ]);
 
@@ -92,6 +99,12 @@ class PromptController extends Controller
             "description" => $request->input('description'),
             "question" => $request->input('question'),
             "result" => $request->input('result'),
+        ]);
+
+        Log::create([
+            "type" => "info",
+            "message" => "User " . Auth::user()->name . " updated, prompt with name " . request('name') . ".",
+            "user_id" => Auth::user()->id,
         ]);
 
         $id = $prompt->id;

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Log;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -27,6 +28,11 @@ class ProfileController extends Controller
         $user->followers()->attach(
             Auth::user()->id,
         );
+        Log::create([
+            "type" => "info",
+            "message" => "User " . Auth::user()->name . " started, following " . $user->name . ".",
+            "user_id" => Auth::user()->id,
+        ]);
 
         return redirect('/profile/' . $user->id);
     }
@@ -40,6 +46,12 @@ class ProfileController extends Controller
         $user->followers()->detach(
             Auth::user()->id,
         );
+
+        Log::create([
+            "type" => "info",
+            "message" => "User " . Auth::user()->name . " unfollowed " . $user->name . ".",
+            "user_id" => Auth::user()->id,
+        ]);
 
         return redirect('/profile/' . Auth::user()->id);
     }
