@@ -49,4 +49,22 @@ class User extends Authenticatable
     public function prompts() {
         return $this->hasMany(Prompt::class);
     }
+
+    public function followers() {
+        return $this->belongsToMany(
+            User::class,
+            table: 'follower_user',
+            relatedPivotKey: 'follower_id',
+            foreignPivotKey: 'followee_id',
+        );
+    }
+
+    public function followings() {
+        return $this->belongsToMany(
+            User::class,
+            table: 'follower_user',
+            foreignPivotKey: 'follower_id',
+            relatedPivotKey: 'followee_id',
+        );
+    }
 }
