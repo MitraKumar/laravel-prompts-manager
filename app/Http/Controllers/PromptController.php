@@ -52,9 +52,8 @@ class PromptController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(int $id)
+    public function show(Prompt $prompt)
     {
-        $prompt = Prompt::findOrFail($id);
         return view('prompts.show', [
             'prompt' => $prompt,
         ]);
@@ -63,9 +62,9 @@ class PromptController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(int $id)
+    public function edit(Prompt $prompt)
     {
-        $prompt = Prompt::findOrFail($id);
+        // $prompt = Prompt::findOrFail($id);
         return view('prompts.edit', [
             'prompt' => $prompt,
         ]);
@@ -74,7 +73,7 @@ class PromptController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, int $id)
+    public function update(Request $request, Prompt $prompt)
     {
         request()->validate([
             "name" => ["required"],
@@ -87,7 +86,6 @@ class PromptController extends Controller
         // $prompt->question = $request->input("question");
         // $prompt->result = $request->input("result");
         // $prompt->save();
-        $prompt = Prompt::findOrFail($id);
 
         $prompt->update([
             "name" => $request->input('name'),
@@ -96,6 +94,7 @@ class PromptController extends Controller
             "result" => $request->input('result'),
         ]);
 
+        $id = $prompt->id;
         return redirect("/prompts/$id");
     }
 

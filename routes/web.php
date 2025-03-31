@@ -6,9 +6,6 @@ use App\Http\Controllers\SessionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/login/otp', [OtpController::class, 'show'])->name('otp');
-Route::post('/login/otp', [OtpController::class, 'store'])->name('otp');
-
 Route::get('/', function () {
     return view('welcome');
 });
@@ -17,13 +14,15 @@ Route::get('/', function () {
 Route::get('/prompts', [PromptController::class, 'index']);
 Route::get('/prompts/create', [PromptController::class, 'create'])->middleware(['auth']);
 Route::post('/prompts', [PromptController::class, 'store'])->middleware(['auth']);
-Route::get('/prompts/{id}', [PromptController::class, 'show']);
-Route::get('/prompts/{id}/edit', [PromptController::class, 'edit'])->middleware(['auth']);
-Route::post('/prompts/{id}', [PromptController::class, 'update'])->middleware(['auth']);
+Route::get('/prompts/{prompt}', [PromptController::class, 'show']);
+Route::get('/prompts/{prompt}/edit', [PromptController::class, 'edit'])->middleware(['auth'])->can('edit-own-prompt', 'prompt');
+Route::post('/prompts/{prompt}', [PromptController::class, 'update'])->middleware(['auth'])->can('edit-own-prompt', 'prompt');
 
 Route::get("/register", [UserController::class, "show"]);
 Route::post("/register", [UserController::class, "create"]);
 
 Route::get("/login", [SessionController::class, "show"])->name("login");
 Route::post("/login", [SessionController::class, "create"]);
+Route::get('/login/otp', [OtpController::class, 'show'])->can('access-tfa')->name('otp');
+Route::post('/login/otp', [OtpController::class, 'store'])->can('access-tfa')->name('otp');
 Route::post("/logout", [SessionController::class, "destroy"]);

@@ -8,7 +8,9 @@
             </h2>
 
             <p class="mt-4">{{ $prompt->description }} </p>
-            <a href="/prompts/{{ $prompt->id }}/edit" class="inline-block mt-8 py-4 px-2 bg-blue-500 hover:bg-blue-700 hover:text-white">Update Prompt</a>
+            @can('edit-own-prompt', $prompt)   
+                <a href="/prompts/{{ $prompt->id }}/edit" class="inline-block mt-8 py-4 px-2 bg-blue-500 hover:bg-blue-700 hover:text-white">Update Prompt</a>
+            @endcan
         </div>
 
         <div class="mt-8 space-y-4 max-w-xl mx-auto bg-blue-300 p-8">
