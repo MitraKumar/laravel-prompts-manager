@@ -32,7 +32,7 @@
         @endguest
         @auth
             <div class="hidden gap-4 lg:flex lg:flex-1 lg:justify-end">
-                <a href="/prompts/create" class="text-sm/6 font-semibold text-gray-900">Add New Prompt</a>
+                <a href="/profile/{{ Auth::user()->id }}" class="text-sm/6 font-semibold text-gray-900">Dashboard</a>
                 <form action="/logout" method="post">
                     @csrf
                     <input type="submit" value="Logout" class="cursor-pointer">

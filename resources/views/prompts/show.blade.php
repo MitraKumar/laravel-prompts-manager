@@ -8,6 +8,7 @@
             </h2>
 
             <p class="mt-4">{{ $prompt->description }} </p>
+            <p class="mt-4">Written By - <a class="text-blue-600" href="/profile/{{ $prompt->user->id }}">{{ $prompt->user->name }}</a></p>
             @can('edit-own-prompt', $prompt)   
                 <a href="/prompts/{{ $prompt->id }}/edit" class="inline-block mt-8 py-4 px-2 bg-blue-500 hover:bg-blue-700 hover:text-white">Update Prompt</a>
             @endcan
